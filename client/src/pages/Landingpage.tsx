@@ -1,4 +1,10 @@
+import { useAuth } from "../Contexts/AuthContext"
+import React from "react"
+import { useState } from "react"
+import { Link } from "react-router-dom"
+
 export default function LandingPage() {
+  
   return (
     <div className="min-h-screen bg-white text-gray-900">
       
@@ -10,9 +16,9 @@ export default function LandingPage() {
           <a href="#" className="hover:text-gray-600">Pricing</a>
           <a href="#" className="hover:text-gray-600">About</a>
         </nav>
-        <button className="bg-black text-white px-4 py-2 rounded-lg">
+        <Link to="/" className="bg-black text-white px-4 py-2 rounded-lg">
           Login
-        </button>
+        </Link>
       </header>
 
       {/* Hero */}

@@ -4,6 +4,9 @@ import { db } from "../DB/data"
 
 export default function ProfilePage() {
   const { user, logout } = useAuth()
+console.log("user" , user);
+
+
 const [selectedAssignment, setSelectedAssignment] = useState<number | null>(null)
 
 
@@ -23,7 +26,7 @@ const [isSubmitting, setIsSubmitting] = useState(false)
   }
 
   if (!user) {
-    return <div className="p-10 text-center">Please login</div>
+    return <div className="p-10 text-center">Please login to Access this page</div>
   }
 
   return (

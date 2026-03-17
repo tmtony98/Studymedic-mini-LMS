@@ -37,8 +37,10 @@ const handleLogin = async (data: {
     // ✅ store session
     localStorage.setItem("token", token)
     localStorage.setItem("user", JSON.stringify(user))
+    alert("Login successful!",user, token )
+    alert("Login successful!")
 
-    navigate("/profile")
+    navigate("/profile")  
   } catch (err: any) {
     alert(err.message)
   } finally {
