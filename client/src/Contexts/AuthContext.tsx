@@ -1,43 +1,59 @@
-// context/AuthContext.tsx
-import React, { createContext, useState, useEffect } from "react"
-import { login, verifyToken } from "../lib/auth"
-import { generateToken } from "../lib/auth"
+import { createContext, useContext, useEffect, useState } from "react"
+import { verifyToken } from "@/lib/auth"
 
+type AuthContextType = {
+  user: any
+  loginUser: (user: any, token: string) => void
+  logout: () => void
+}
 
+const AuthContext = createContext<AuthContextType | null>(null)
 
-const AuthContext = createContext(null)
+export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
+  const [user, setUser] = useState<any>(null)
+  
+     const logout = () => {
+    localStorage.removeItem("token")
+    localStorage.removeItem("user")
+    setUser(null)
+  }
 
-export const AuthProvider = ({ children }) => {
-  const [user, setUser] = useState(null)
-
+  // 🔁 persist auth on refresh
   useEffect(() => {
     const token = localStorage.getItem("token")
+    const storedUser = localStorage.getItem("user")
 
-    if (token) {
-      const payload = verifyToken(token)
+ 
 
-      if (payload) {
-        const user = JSON.parse(localStorage.getItem("user"))
-        setUser(user)
+    if (token && storedUser) {
+      const valid = verifyToken(token)
+
+      if (valid) {
+        setUser(JSON.parse(storedUser))
       } else {
         logout()
       }
     }
   }, [])
 
-  const loginUser = async (data) => {
-    const user = await login(data)
+  const loginUser = (user: any, token: string) => {
+    localStorage.setItem("token", token)
+    localStorage.setItem("user", JSON.stringify(user))
     setUser(user)
   }
 
-  const logout = () => {
-    localStorage.clear()
-    setUser(null)
-  }
+ 
 
   return (
     <AuthContext.Provider value={{ user, loginUser, logout }}>
       {children}
     </AuthContext.Provider>
   )
+}
+
+// custom hook
+export const useAuth = () => {
+  const ctx = useContext(AuthContext)
+  if (!ctx) throw new Error("useAuth must be used inside AuthProvider")
+  return ctx
 }

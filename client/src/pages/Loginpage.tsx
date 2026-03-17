@@ -2,7 +2,7 @@ import React from "react";
 import { LoginForm } from "../components/LoginForm";
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
-import { db } from "../DB/data";
+
 import { generateToken } from "@/lib/auth";
 
 function Loginpage() {
@@ -38,7 +38,7 @@ const handleLogin = async (data: {
     localStorage.setItem("token", token)
     localStorage.setItem("user", JSON.stringify(user))
 
-    navigate("/dashboard")
+    navigate("/profile")
   } catch (err: any) {
     alert(err.message)
   } finally {
