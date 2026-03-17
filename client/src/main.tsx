@@ -10,7 +10,6 @@ import { AuthProvider } from "../src/Contexts/AuthContext";
 import ProfilePage from "./pages/Profilepage";
 
 
-
 createRoot(document.getElementById("root")!).render(
   <StrictMode>
     <AuthProvider>
