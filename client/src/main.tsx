@@ -5,7 +5,7 @@ import App from "./App"
 import { BrowserRouter } from "react-router-dom"
 import { Routes, Route } from "react-router-dom";
 import Loginpage from "./pages/Loginpage"
-import { SignupForm } from "./components/SignupForm"
+import SignupPage from "./pages/SignupPage"
 
 
 createRoot(document.getElementById("root")!).render(
@@ -13,7 +13,7 @@ createRoot(document.getElementById("root")!).render(
     <BrowserRouter>
     <Routes>
       <Route path="/" element={<Loginpage />} />
-      <Route path="/signup" element={<SignupForm/>} />
+      <Route path="/signup" element={<SignupPage/>} />
     </Routes>
       <App/>
     </BrowserRouter>
