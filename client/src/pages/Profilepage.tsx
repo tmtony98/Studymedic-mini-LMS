@@ -60,16 +60,8 @@ export default function ProfilePage() {
     setIsSubmitting(false);
   };
 
-  
-if (loading) {
-  return <div className="p-10 text-center">Loading...</div>
-}
 
-  if (!user) {
-    return (
-      <div className="p-10 text-center">Please login to Access this page</div>
-    );
-  }
+
 
   return (
     <div className="min-h-screen bg-gray-50 p-6">
