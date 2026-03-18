@@ -1,30 +1,27 @@
-import React, { use, useEffect } from "react";
+import React from "react";
 import { LoginForm } from "../components/LoginForm";
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
-import { login } from "../services/Authservice";
-import { useAuth } from "../Contexts/AuthContext";
+import { userStore } from "../Store/Authstore";
 
 
 function Loginpage() {
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
-  const { setUser , setLoading: setAuthLoading } = useAuth();
- 
-  type handleloginType = ()=> void
 
- 
+  const login = userStore((state) => state.login)
 
-  const handleLogin:handleloginType = async (data:any)=>{
+  const handleLogin = async (data: any) => {
     setLoading(true)
-    try{
+    try {
       const user = await login(data)
-      setUser(user) // ✅ update context with user data
-       navigate("/profile")
-       setLoading(false)
-
-    }catch(err){
+      if (user) {
+        navigate("/profile")
+      }
+    } catch (err) {
       console.log("error", err);
+    } finally {
+      setLoading(false)
     }
   }
 

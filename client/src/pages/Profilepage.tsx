@@ -1,10 +1,18 @@
-import { useAuth } from "../Contexts/AuthContext";
 import { useState } from "react";
-import { db } from "../DB/data";
+import { db, saveDB } from "../DB/data";
+import { userStore } from "@/Store/Authstore";
+import { useNavigate } from "react-router-dom";
 
 export default function ProfilePage() {
-  const { user, logout , loading } = useAuth();
-  console.log("user", user);
+  const navigate = useNavigate();
+
+  const logout = userStore((state) => state.logout);
+  const user = userStore((state) => state.user);
+
+  const handleLogout = () => {
+    logout();
+    navigate("/");
+  };
 
   const [selectedAssignment, setSelectedAssignment] = useState<number | null>(
     null,
@@ -28,7 +36,7 @@ export default function ProfilePage() {
     setIsSubmitting(true);
 
     const alreadySubmitted = db.submissions.find(
-      (s: any) => s.assignmentId === selectedAssignment && s.userId === user.id,
+      (s: any) => s.assignmentId === selectedAssignment && s.userId === user?.id,
     );
 
     if (alreadySubmitted) {
@@ -49,7 +57,6 @@ export default function ProfilePage() {
     // ✅ push into DB
     db.submissions.push(newSubmission);
 
-
     saveDB();
 
     console.log("Saved submission:", newSubmission);
@@ -60,16 +67,13 @@ export default function ProfilePage() {
     setIsSubmitting(false);
   };
 
-
-
-
   return (
     <div className="min-h-screen bg-gray-50 p-6">
       {/* Header */}
       <div className="flex justify-between items-center mb-8">
         <h1 className="text-2xl font-bold">Learner Dashboard</h1>
         <button
-          onClick={logout}
+          onClick={handleLogout}
           className="bg-black text-white px-4 py-2 rounded-lg"
         >
           Logout
@@ -81,10 +85,10 @@ export default function ProfilePage() {
         <h2 className="text-xl font-semibold mb-4">Profile</h2>
         <div className="grid md:grid-cols-2 gap-4">
           <p>
-            <strong>Name:</strong> {user.name}
+            <strong>Name:</strong> {user?.name}
           </p>
           <p>
-            <strong>Email:</strong> {user.email}
+            <strong>Email:</strong> {user?.email}
           </p>
           <p>
             <strong>Role:</strong> Learner

@@ -6,14 +6,12 @@ import { BrowserRouter } from "react-router-dom";
 import { Routes, Route } from "react-router-dom";
 import Loginpage from "./pages/Loginpage";
 import SignupPage from "./pages/SignupPage";
-import { AuthProvider } from "../src/Contexts/AuthContext";
 import ProfilePage from "./pages/Profilepage";
 import Authguard from "./Guards/Authguard";
 
 
 createRoot(document.getElementById("root")!).render(
   <StrictMode>
-    <AuthProvider>
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<Loginpage />} />
@@ -23,6 +21,5 @@ createRoot(document.getElementById("root")!).render(
          
         </Routes>
       </BrowserRouter>
-    </AuthProvider>
   </StrictMode>,
 );

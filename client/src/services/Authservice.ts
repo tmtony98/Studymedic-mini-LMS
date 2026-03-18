@@ -1,6 +1,4 @@
-import { email, string } from "zod";
 import { db , saveDB } from "../DB/data";
-import { generateToken } from "@/lib/auth";
 
 
 type RegisterInput = {
@@ -38,16 +36,4 @@ export const register = async (data: RegisterInput) => {
   return newUser;
 };
 
-export const login = async (data: loginInput) => {
-  await new Promise((res) => setTimeout(res, 500));
-  const user = db.users.find(
-    (u) => u.email === data.email && u.password === data.password,
-  );
-  if (!user) {
-    throw new Error("Invalid credentials");
-  }
-  const token = generateToken(user);
-  localStorage.setItem("token", token);
-  localStorage.setItem("user", JSON.stringify(user));
-  return user;
-};
+
